@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+
+    string[] products =
+    {
+        "Water",
+        "Orange Juice",
+        "Coffee",
+        "Sandwich",
+        "Chocolate"
+    };
+
+    string[] suppliers =
+    {
+        "Fresh Food Company",
+        "Happy Drinks Company",
+        "Daily Supplies Company",
+        "Fresh Food Company",
+        "Daily Supplies Company"
+    };
+
+    int[] quantities = { 100, 20, 50, 0, 30 };
+
+    string[] statuses =
+    {
+        "Available",
+        "Low Stock",
+        "Available",
+        "Out of Stock",
+        "Available"
+    };
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Supply Status</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Supply Status</h1>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Product Name</th>
+                    <th>Supplier</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < products.Length; i++)
+                {
+                    string badgeClass;
+
+                    if (statuses[i] == "Available")
+                    {
+                        badgeClass = "bg-success";
+                    }
+                    else if (statuses[i] == "Low Stock")
+                    {
+                        badgeClass = "bg-warning text-dark";
+                    }
+                    else
+                    {
+                        badgeClass = "bg-danger";
+                    }
+
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@products[i]</td>
+                        <td>@suppliers[i]</td>
+                        <td>@quantities[i]</td>
+                        <td>
+                            <span class="badge @badgeClass">@statuses[i]</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

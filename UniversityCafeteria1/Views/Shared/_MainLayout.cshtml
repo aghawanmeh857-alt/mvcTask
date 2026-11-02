@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>University Cafeteria</title>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <h1>University Cafeteria</h1>
+
+        <nav>
+            <a asp-controller="Cafeteria" asp-action="Index">Home</a> |
+            <a asp-controller="Cafeteria" asp-action="Products">Products</a> |
+            <a asp-controller="Cafeteria" asp-action="Suppliers">Suppliers</a> |
+            <a asp-controller="Cafeteria" asp-action="SupplyStatus">Supply Status</a>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <p>University Cafeteria Supply Management System</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

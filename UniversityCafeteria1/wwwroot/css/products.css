@@ -1,0 +1,18 @@
+﻿body {
+    background-color: #f3f8ff;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    color: #164e8a;
+}
+
+ul {
+    background-color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+}
+
+li {
+    margin: 8px;
+}
