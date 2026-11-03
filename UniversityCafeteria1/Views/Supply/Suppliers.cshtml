@@ -1,0 +1,17 @@
+﻿<div class="container mt-4">
+    <h1>@ViewBag.Title</h1>
+    <p>Number of Suppliers: @ViewBag.SupplierCount</p>
+
+    <div class="row">
+        @foreach (string supplier in ViewBag.Suppliers)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@supplier</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

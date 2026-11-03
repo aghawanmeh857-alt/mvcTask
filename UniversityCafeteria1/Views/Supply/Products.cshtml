@@ -1,0 +1,27 @@
+﻿@{
+    var products = ViewData["Products"] as string[];
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>Manager: @ViewData["ManagerName"]</p>
+            <p>Number of Products: @ViewData["ProductCount"]</p>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (string product in products)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@product</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

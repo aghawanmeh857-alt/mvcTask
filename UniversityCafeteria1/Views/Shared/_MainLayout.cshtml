@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>University Cafeteria</title>
     @RenderSection("Styles", required: false)
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <h1>University Cafeteria</h1>
 
         <nav>
-            <a asp-controller="Cafeteria" asp-action="Index">Home</a> |
-            <a asp-controller="Cafeteria" asp-action="Products">Products</a> |
-            <a asp-controller="Cafeteria" asp-action="Suppliers">Suppliers</a> |
-            <a asp-controller="Cafeteria" asp-action="SupplyStatus">Supply Status</a>
+                   <a asp-controller="Supply" asp-action="Index">Home</a> |
+        <a asp-controller="Supply" asp-action="Products">Products</a> |
+        <a asp-controller="Supply" asp-action="Suppliers">Suppliers</a> |
+        <a asp-controller="Supply" asp-action="CreateRequest">Create Request</a> |
+        <a asp-controller="Supply" asp-action="About">About</a>
         </nav>
     </header>
 
