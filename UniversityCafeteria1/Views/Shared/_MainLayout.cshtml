@@ -1,35 +1,32 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>University Cafeteria</title>
-    @RenderSection("Styles", required: false)
-
+    <title>@ViewData["Title"] - University Cafeteria</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <h1>University Cafeteria</h1>
-
-        <nav>
-                   <a asp-controller="Supply" asp-action="Index">Home</a> |
-        <a asp-controller="Supply" asp-action="Products">Products</a> |
-        <a asp-controller="Supply" asp-action="Suppliers">Suppliers</a> |
-        <a asp-controller="Supply" asp-action="CreateRequest">Create Request</a> |
-        <a asp-controller="Supply" asp-action="About">About</a>
-        </nav>
+    <header class="bg-dark text-white p-4 mb-4">
+        <div class="container">
+            <h1 class="h3">University Cafeteria</h1>
+            <nav class="d-flex flex-wrap gap-3" aria-label="Main navigation">
+                <a class="text-white" href="@Url.Action("Index", "Supply")">Home</a>
+                <a class="text-white" href="@Url.Action("Products", "Supply")">Products</a>
+                <a class="text-white" href="@Url.Action("Suppliers", "Supply")">Suppliers</a>
+                <a class="text-white" href="@Url.Action("Index", "SupplyRequest")">Create Supply Request</a>
+                <a class="text-white" href="@Url.Action("Review", "SupplyRequest")">Review Draft</a>
+                <a class="text-white" href="@Url.Action("MyRequests", "SupplyRequest")">My Requests</a>
+                <a class="text-white" href="@Url.Action("About", "SupplyRequest")">About</a>
+            </nav>
+        </div>
     </header>
-
-    <main>
-        @RenderBody()
-    </main>
-
-    <footer>
+    <main class="container pb-4">@RenderBody()</main>
+    <footer class="container border-top pt-3 mt-4 text-muted">
         <p>University Cafeteria Supply Management System</p>
     </footer>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

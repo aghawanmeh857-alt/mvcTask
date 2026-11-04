@@ -1,0 +1,49 @@
+@model List<SupplyRequest>
+@{
+    ViewData["Title"] = "My Requests";
+}
+
+<h2>My Supply Requests</h2>
+@if (TempData["Message"] is string message)
+{
+    <div class="alert alert-success" role="status">@message</div>
+}
+<p class="text-muted">Confirmed requests are stored in the application's memory and reset when it restarts.</p>
+
+@if (Model.Count == 0)
+{
+    <p>No confirmed requests yet.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Number of Products</th>
+                    <th>Subtotal</th>
+                    <th>Preparation Fee</th>
+                    <th>Discount</th>
+                    <th>Final Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>@request.Id</td>
+                        <td>@request.Items.Count</td>
+                        <td>@request.Subtotal.ToString("F3") JD</td>
+                        <td>@request.PreparationFee.ToString("F3") JD</td>
+                        <td>@request.Discount.ToString("F3") JD</td>
+                        <td>@request.FinalTotal.ToString("F3") JD</td>
+                        <td><span class="badge bg-success">@request.Status</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+<a class="btn btn-primary" href="@Url.Action("Index", "SupplyRequest")">Create Supply Request</a>

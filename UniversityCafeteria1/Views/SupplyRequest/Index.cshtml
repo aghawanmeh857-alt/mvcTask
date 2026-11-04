@@ -1,0 +1,88 @@
+@model SupplyRequestPage
+@{
+    ViewData["Title"] = "Create Supply Request";
+}
+
+<h2>Create Supply Request</h2>
+<p>Add products to your draft, then review the cost before confirming.</p>
+
+@if (TempData["Message"] is string message)
+{
+    <div class="alert alert-info" role="status">@message</div>
+}
+
+<div class="row g-4">
+    <section class="col-lg-8">
+        <form method="post" action="@Url.Action("AddItem", "SupplyRequest")" class="card card-body">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+
+            <div class="mb-3">
+                <label asp-for="Item.ProductName" class="form-label">Product Name</label>
+                <input asp-for="Item.ProductName" class="form-control" required maxlength="100" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Item.Category" class="form-label">Category</label>
+                <select asp-for="Item.Category" class="form-select" required>
+                    <option value="">Choose a category</option>
+                    <option>Drinks</option>
+                    <option>Food</option>
+                    <option>Snacks</option>
+                    <option>Hot Drinks</option>
+                    <option>Cold Drinks</option>
+                    <option>Packaging Materials</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label asp-for="Item.Quantity" class="form-label">Quantity</label>
+                    <input asp-for="Item.Quantity" class="form-control" min="1" max="1000000" required />
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label asp-for="Item.UnitPrice" class="form-label">Unit Price (JD)</label>
+                    <input asp-for="Item.UnitPrice" type="number" step="0.001" min="0.001" max="1000000" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Item.Priority" class="form-label">Priority</label>
+                <select asp-for="Item.Priority" class="form-select">
+                    <option>Normal</option>
+                    <option>Urgent</option>
+                    <option>Emergency</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+    </section>
+
+    <aside class="col-lg-4">
+        <div class="card card-body mb-3">
+            <h3 class="h5">Current draft</h3>
+            <p>@Model.Draft.Items.Count product entries</p>
+            @foreach (var item in Model.Draft.Items)
+            {
+                <p>@item.ProductName × @item.Quantity — @item.Total.ToString("F3") JD</p>
+            }
+            <p>Subtotal: <strong>@Model.Draft.Subtotal.ToString("F3") JD</strong></p>
+            <a class="btn btn-outline-primary" href="@Url.Action("Review", "SupplyRequest")">Review Draft</a>
+        </div>
+
+        <form method="post" action="@Url.Action("SavePreference", "SupplyRequest")" class="card card-body">
+            @Html.AntiForgeryToken()
+            <h3 class="h5">Default priority</h3>
+            <p>Your preferred request priority is @Model.PreferredPriority.</p>
+            <label for="preferred-priority" class="form-label">Preferred priority (remembered for 7 days)</label>
+            <select id="preferred-priority" name="priority" class="form-select mb-3">
+                @foreach (var priority in new[] { "Normal", "Urgent", "Emergency" })
+                {
+                    <option value="@priority" selected="@(priority == Model.PreferredPriority)">@priority</option>
+                }
+            </select>
+            <button class="btn btn-outline-secondary" type="submit">Save Preference</button>
+        </form>
+    </aside>
+</div>

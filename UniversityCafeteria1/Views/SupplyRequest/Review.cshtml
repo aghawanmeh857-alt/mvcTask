@@ -1,0 +1,74 @@
+@model SupplyRequest
+@{
+    ViewData["Title"] = "Review Draft";
+}
+
+<h2>Review Draft</h2>
+@if (TempData["Message"] is string message)
+{
+    <div class="alert alert-info" role="status">@message</div>
+}
+
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-secondary">Your draft is empty. Add at least one product before confirming.</div>
+    <a class="btn btn-primary" href="@Url.Action("Index", "SupplyRequest")">Add Products</a>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Priority</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Category</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("F3") JD</td>
+                        <td>@item.Priority</td>
+                        <td>@item.Total.ToString("F3") JD</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <p>The highest product priority determines one preparation fee for the whole request.</p>
+    <dl class="row">
+        <dt class="col-sm-4">Subtotal</dt>
+        <dd class="col-sm-8">@Model.Subtotal.ToString("F3") JD</dd>
+        <dt class="col-sm-4">Preparation Fee (@Model.Priority)</dt>
+        <dd class="col-sm-8">@Model.PreparationFee.ToString("F3") JD</dd>
+        <dt class="col-sm-4">Discount</dt>
+        <dd class="col-sm-8">@Model.Discount.ToString("F3") JD</dd>
+        <dt class="col-sm-4">Final Total</dt>
+        <dd class="col-sm-8"><strong>@Model.FinalTotal.ToString("F3") JD</strong></dd>
+    </dl>
+    <p class="text-muted">Discounts apply to the subtotal: over 100 JD → 10%; over 200 JD → 15%.</p>
+
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-outline-primary" href="@Url.Action("Index", "SupplyRequest")">Add More Products</a>
+
+        <form method="post" action="@Url.Action("ConfirmRequest", "SupplyRequest")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button class="btn btn-success" type="submit">Confirm Request</button>
+        </form>
+
+        <form method="post" action="@Url.Action("ClearDraft", "SupplyRequest")">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-outline-danger" type="submit">Clear Draft</button>
+        </form>
+    </div>
+}
